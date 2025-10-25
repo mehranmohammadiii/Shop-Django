@@ -1,0 +1,13 @@
+{% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    {% if inactive_user_mobile %}
+                        <a href="{% url 'accounts:resend-code' mobile=inactive_user_mobile %}" class="alert-link">ارسال مجدد کد فعال‌سازی</a>
+                    {% endif %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+{% endif %}
