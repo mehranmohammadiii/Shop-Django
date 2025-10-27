@@ -1,5 +1,5 @@
-
 {% extends "maintemplate.html" %}
+{% load render_partial %}
 {% load static %}
 {% block title %}
     فروشگاه
@@ -115,7 +115,7 @@
 			</div>
 			<!-- .block-features / end -->
 			<!-- .block-products-carousel -->
-			<div class="block block-products-carousel" data-layout="grid-5">
+			{% comment %} <div class="block block-products-carousel" data-layout="grid-5">
 				<div class="container">
 					<div class="block-header">
 						<h3 class="block-header__title">محصولات ویژه</h3>
@@ -505,7 +505,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> {% endcomment %}
+			kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+			{% render_partial 'products:special_products'%}
 			<!-- .block-products-carousel / end -->
 			<!-- .block-banner -->
 			<div class="block block-banner">
@@ -945,7 +947,7 @@
 			</div>
 			<!-- .block-categories / end -->
 			<!-- .block-products-carousel -->
-			<div class="block block-products-carousel" data-layout="grid-5">
+			{% comment %} <div class="block block-products-carousel" data-layout="grid-5">
 				<div class="container">
 					<div class="block-header">
 						<h3 class="block-header__title">محصولات جدید</h3>
@@ -1028,7 +1030,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> {% endcomment %}
+			kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+			{% render_partial 'products:new_products'%}
+
 			<!-- .block-products-carousel / end -->
 			<!-- .block-posts -->
 			<div class="block block-posts block-posts--layout--grid-nl" data-layout="grid-nl">

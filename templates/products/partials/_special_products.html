@@ -1,0 +1,15 @@
+{% load static %} 
+
+<div class="block block-products-carousel" data-layout="grid-5">
+    <div class="container"> 
+        {% comment %} {% include "partials/products/root_groups.html" with groups=product_groups  %} {% endcomment %}
+                {% include "partials/products/root_groups.html" with group='محصولات ویژه'  %}
+
+
+<div class="product-flexbox">
+    {% for product in special_products %}
+    {% include "partials/products/product_box.html" with type=1 %}
+    {% endfor %}
+</div>
+    </div>
+</div>

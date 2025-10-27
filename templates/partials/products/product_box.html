@@ -1,0 +1,94 @@
+{% if type == 1  %}
+
+{% load static %}
+{% load humanize %}
+   <div class="product-card">
+            <div class="product-card__image">
+                {% if product.discount_percent > 0 %}
+                    <div class="product-card__badge">{{ product.discount_percent }}%</div>
+                {% endif %}
+                <a href="#">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/default-product.png' %}" alt="{{ product.name }}">
+                    {% endif %}
+                </a>
+            </div>
+
+            <div class="product-card__content">
+                <div class="product-card__info">
+                    <div class="product-card__name">
+                        <a href="#">{{ product.name|truncatewords:7 }}</a>
+                    </div>
+                    {% if product.score > 0 %}
+                        <div class="product-card__rating">
+                            <span>{{ product.score }}</span>
+                            <i class="fa fa-star text-warning"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="product-card__actions">
+                    <div class="product-card__prices">
+                        <span class="product-card__new-price">{{ product.price|intcomma }} تومان</span>
+                        {% if product.discount_percent > 0 and product.previous_price > 0 %}
+                            <del class="product-card__old-price">{{ product.previous_price|intcomma }}</del>
+                        {% endif %}
+                    </div>
+                    <div class="product-card__buttons">
+                        <button class="btn btn-primary product-card__addtocart" type="button">افزودن به سبد</button>
+                        <button class="btn btn-light btn-svg-icon product-card__wishlist" type="button"><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% elif type == 2 %}
+
+{% load static %}
+{% load humanize %}
+   <div class="product-card">
+            <div class="product-card__image">
+                {% if product.discount_percent > 0 %}
+                    <div class="product-card__badge">{{ product.discount_percent }}%</div>
+                {% endif %}
+                <a href="#">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/default-product.png' %}" alt="{{ product.name }}">
+                    {% endif %}
+                </a>
+            </div>
+
+            <div class="product-card__content">
+                <div class="product-card__info">
+                    <div class="product-card__name">
+                        <a href="#">{{ product.name|truncatewords:7 }}</a>
+                    </div>
+                    {% if product.score > 0 %}
+                        <div class="product-card__rating">
+                            <span>{{ product.score }}</span>
+                            <i class="fa fa-star text-warning"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="product-card__actions">
+                    <div class="product-card__prices">
+                        <span class="product-card__new-price">{{ product.price|intcomma }} تومان</span>
+                        {% if product.discount_percent > 0 and product.previous_price > 0 %}
+                            <del class="product-card__old-price">{{ product.previous_price|intcomma }}</del>
+                        {% endif %}
+                    </div>
+                    <div class="product-card__buttons">
+                        <button class="btn btn-primary product-card__addtocart" type="button">افزد</button>
+                        <button class="btn btn-light btn-svg-icon product-card__wishlist" type="button"><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+
+
+
