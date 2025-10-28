@@ -5439,7 +5439,8 @@ screen and (-ms-high-contrast:active) {
 }
 .category-card__all {
 	margin-top: 14px;
-	font-size: 14px
+	font-size: 14px;
+	margin-bottom: 20px;
 }
 .category-card__all a:hover {
 	text-decoration: underline
@@ -9532,56 +9533,51 @@ screen and (-ms-high-contrast:active) {
 .lg-outer .lg-thumb-item:hover{
 	border-color: #ee4156;
 }
-/* .product-flexbox {
+.product-flexbox {
 	display: flex !important;
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
-} */
+}
+/* ----------------------------------------------------------------------------------------------- */
 
-/* والد اصلی که همه کارت‌ها را در بر می‌گیرد */
+/* 
 .product-flexbox {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem; /* ایجاد فاصله بین کارت‌ها (به جای margin) */
-    justify-content: center; /* کارت‌ها را در مرکز ردیف قرار می‌دهد */
+    gap: 1rem; 
+    justify-content: center; 
 }
 
-/* خود کارت محصول */
 .product-card {
-    width: 200px; /* عرض ثابت برای هر کارت */
-    border: 1px solid #eee; /* یک حاشیه ظریف برای زیبایی */
-    border-radius: 8px; /* گوشه‌های گرد */
+    width: 200px;
+    border: 1px solid #eee; 
+    border-radius: 8px; 
     display: flex;
-    flex-direction: column; /* محتوای داخلی کارت را عمودی می‌چیند */
-    overflow: hidden; /* جلوگیری از بیرون زدن محتوا */
+    flex-direction: column;
+    overflow: hidden; 
 }
 
-/* محفظه اصلی محتوای متنی کارت */
 .product-card__content {
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* این بخش تمام فضای خالی عمودی را پر می‌کند */
-}
+    flex-grow: 1; 
 
-/* بخش نام و امتیاز */
 .product-card__info {
-    flex-grow: 1; /* این بخش رشد کرده و بخش اکشن‌ها را به پایین هل می‌دهد */
+    flex-grow: 1;
 }
 
 .product-card__name {
-    /* می‌توانید ارتفاع ثابتی برای نام در نظر بگیرید تا همه در یک راستا باشند */
-    min-height: 40px; /* مثال: حداقل ارتفاع برای دو خط متن */
+    min-height: 40px; 
 }
 
-/* بخش قیمت و دکمه‌ها */
 .product-card__actions {
-    margin-top: 1rem; /* فاصله از بخش بالایی */
+    margin-top: 1rem; 
 }
 
 .product-card__image {
-    position: relative; /* برای قرارگیری صحیح badge تخفیف */
+    position: relative; 
 }
 
 .product-card__image img {
@@ -9594,12 +9590,11 @@ screen and (-ms-high-contrast:active) {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #dc3545; /* رنگ قرمز بوت‌استرپ */
+    background-color: #dc3545;
     color: white;
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.8rem;
     z-index: 10;
-}
-
-
+} */
+/* -------------------------------------------------------------------------------------------------- */

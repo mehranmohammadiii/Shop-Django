@@ -1,0 +1,13 @@
+	{% load static %} 
+    {% load render_partial %}
+
+    <ul class="filter-categories__list">
+                                                                {% for product_group in product_groups %}
+																<li class="filter-categories__item filter-categories__item--parent">
+																	<svg class="filter-categories__arrow" width="6px" height="9px">
+																		<use xlink:href="images/sprite.svg#arrow-rounded-left-6x9"></use>
+														</svg> <a href="">{{product_group.name}}</a>
+														<div class="filter-categories__counter">{{product_group.product_groups.all|length}}</div>
+																</li>
+                                                                {% endfor %}
+															</ul>

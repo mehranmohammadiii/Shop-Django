@@ -2,16 +2,52 @@
 
 {% load static %}
 {% load humanize %}
-   <div class="product-card">
+		<div class="product-card" style='width: 200px !important; margin-left:12px;'>
+			<div class="product-card__image">
+				<a href="{% url "products:product_detail" slug=product.slug%}">
+					<img src="{% static "images/products/p1.jpg" %} " alt="">
+				</a>
+			</div>
+			<div class="product-card__info">
+				<div class="product-card__name">
+					<a href="{% url "products:product_detail" slug=product.slug%}">
+						{{product.name}}
+					</a>
+				</div>
+            </div>
+				<div class="product-card__actions">
+					<div class="product-card__prices">{{ product.price|intcomma }}تومان</div>
+						<div class="product-card__buttons">
+								<button class="btn btn-primary product-card__addtocart"
+										type="button">
+										افزودن به سبد
+								</button>
+				<button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+					type="button">
+					<i class="fa fa-heart"></i>
+					<span
+				    class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
+				<button
+				class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+				type="button">
+				<i class="fa fa-shopping-cart"></i>
+				<span
+			        class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
+        </div>
+	</div>
+</div>
+   {% comment %} <div class="product-card">
             <div class="product-card__image">
                 {% if product.discount_percent > 0 %}
                     <div class="product-card__badge">{{ product.discount_percent }}%</div>
                 {% endif %}
-                <a href="#">
+                <a href="{% url "products:product_detail" slug=product.slug%}">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
                     {% else %}
-                        <img src="{% static 'images/default-product.png' %}" alt="{{ product.name }}">
+                        <img src="{% static 'images/products/p11.jphg' %}" alt="{{ product.name }}">
                     {% endif %}
                 </a>
             </div>
@@ -42,12 +78,48 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
 {% elif type == 2 %}
 
 {% load static %}
 {% load humanize %}
-   <div class="product-card">
+		<div class="product-card" style='width: 200px !important; margin-left:12px;'>
+			<div class="product-card__image">
+				<a href="{% url "products:product_detail" slug=product.slug%}">
+					<img src="{% static "images/products/p1.jpg" %} " alt="">
+				</a>
+			</div>
+			<div class="product-card__info">
+				<div class="product-card__name">
+					<a href="{% url "products:product_detail" slug=product.slug%}">
+						{{product.name}}
+					</a>
+				</div>
+            </div>
+				<div class="product-card__actions">
+					<div class="product-card__prices">{{ product.price|intcomma }}تومان</div>
+						<div class="product-card__buttons">
+								<button class="btn btn-primary product-card__addtocart"
+										type="button">
+										افزودن به سبد
+								</button>
+				<button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+					type="button">
+					<i class="fa fa-heart"></i>
+					<span
+				    class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
+				<button
+				class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+				type="button">
+				<i class="fa fa-shopping-cart"></i>
+				<span
+			        class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
+        </div>
+	</div>
+</div>
+   {% comment %} <div class="product-card">
             <div class="product-card__image">
                 {% if product.discount_percent > 0 %}
                     <div class="product-card__badge">{{ product.discount_percent }}%</div>
@@ -87,7 +159,82 @@
                     </div>
                 </div>
             </div>
+        </div> {% endcomment %}
+       
+        
+{% elif type == 3 %}
+{% load static %}
+{% load humanize %}
+		<div class="product-card" style='width: 200px !important; margin-left:12px;'>
+			<div class="product-card__image">
+				<a href="{% url "products:product_detail" slug=related_product.slug%}">
+					{% comment %} <img src="{% static "images/products/p1.jpg" %} " alt=""> {% endcomment %}
+				</a>
+			</div>
+			<div class="product-card__info">
+				<div class="product-card__name">
+					<a href="{% url "products:product_detail" slug=related_product.slug%}">
+						{{related_product.name}}
+					</a>
+				</div>
+            </div>
+				<div class="product-card__actions">
+					<div class="product-card__prices">{{ related_product.price|intcomma }}تومان</div>
+						<div class="product-card__buttons">
+								<button class="btn btn-primary product-card__addtocart"
+										type="button">
+										افزودن به سبد
+								</button>
+				<button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+					type="button">
+					<i class="fa fa-heart"></i>
+					<span
+				    class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
+				<button
+				class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+				type="button">
+				<i class="fa fa-shopping-cart"></i>
+				<span
+			        class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+				</button>
         </div>
+	</div>
+</div>
+{% elif type == 4 %}
+{% load static %}
+{% load humanize %}
+
+											<div class="product-card">
+												<div class="product-card__badges-list">
+													<div class="product-card__badge product-card__badge--new">جدید</div>
+												</div>
+												<div class="product-card__image">
+													<a href="{% url "products:product_detail" slug=product.slug %}">
+														<img src="{% static "images/products/p1.jpg" %}" alt="">
+													</a>
+												</div>
+												<div class="product-card__info">
+													<div class="product-card__name"><a href="product.html"> {{product.name}}    </a></div>
+
+												</div>
+												<div class="product-card__actions">
+													<div class="product-card__availability">موجودی: <span class="text-success">موجود در انبار</span></div>
+													<div class="product-card__prices">{{product.price}} تومان</div>
+													<div class="product-card__buttons">
+														<button class="btn btn-primary product-card__addtocart" type="button">افزودن به سبد</button>
+														<button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">افزودن به سبد</button>
+														<button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist" type="button">
+															<svg width="16px" height="16px">
+																<use xlink:href="images/sprite.svg#wishlist-16"></use>
+															</svg> <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span></button>
+														<button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare" type="button">
+															<svg width="16px" height="16px">
+																<use xlink:href="images/sprite.svg#compare-16"></use>
+															</svg> <span class="fake-svg-icon fake-svg-icon--compare-16"></span></button>
+													</div>
+												</div>
+											</div>
 {% endif %}
 
 

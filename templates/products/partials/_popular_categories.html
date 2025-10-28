@@ -1,0 +1,32 @@
+{% load static %}
+<!-- .block-categories -->
+			 <div class="block block--highlighted block-categories block-categories--layout--compact">
+				<div class="container">
+					<div class="block-header">
+						<h3 class="block-header__title">دسته های محبوب</h3>
+
+						<div class="block-header__divider"></div>
+                        <div class="category-card__all"><a href="{% url "products:product_grops" %}">نمایش همه</a></div>
+
+					</div>
+
+					<div class="block-categories__list">
+                        {% for popular_categori in popular_categories  %}
+						<div class="block-categories__item category-card category-card--layout--compact">
+							<div class="category-card__body">
+								<div class="category-card__image">
+									<a href="{% url "products:products_by_group" slug=popular_categori.slug %}">
+										<img src="{% static "images/categories/mobile.jpg" %} " alt="">
+									</a>
+								</div>
+								<div class="category-card__content">
+									<div class="category-card__name"><a href="{% url "products:products_by_group" slug=popular_categori.slug %}">{{popular_categori.name}}</a></div>
+									<div class="category-card__products">{{popular_categori.product_groups.all|length}} محصول</div>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+					</div>
+				</div>
+			</div> 
+			<!-- .block-categories / end -->

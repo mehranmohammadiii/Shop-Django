@@ -1,0 +1,29 @@
+{% extends "maintemplate.html" %}
+{% load render_partial %}
+{% load static %}
+{% block title %}
+    فروشگاه
+{% endblock title %}
+
+{% block content %}
+
+					<div class="block-categories__list">
+                        {% for product__group in product__groups  %}
+						<div class="block-categories__item category-card category-card--layout--compact">
+							<div class="category-card__body">
+								<div class="category-card__image">
+									<a href="">
+										<img src="{% static "images/categories/mobile.jpg" %} " alt="">
+									</a>
+								</div>
+								<div class="category-card__content">
+									<div class="category-card__name"><a href="">{{product__group.name}}</a></div>
+									<div class="category-card__products">{{product__group.product_groups.all|length}} محصول</div>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+					</div>
+{% endblock content %}
+
+

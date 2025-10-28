@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 # ------------------------------------------------------------------------------------------------------
 class Brand(models.Model):
     name = models.CharField(max_length=50,verbose_name='نام برند')
@@ -43,7 +44,7 @@ class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name='نام محصول')
     short_text = models.TextField(max_length=500,null=True,blank=True,verbose_name='متن خلاصه')
     text = models.TextField(null=True,blank=True,verbose_name='متن و توضیخات')
-    slug = models.SlugField(max_length=250,null=True)
+    slug = models.SlugField(max_length=250,null=True,blank=True,unique=True,allow_unicode=True)
 
     price = models.PositiveIntegerField(default=0,verbose_name='قیما نهایی')
     previous_price = models.PositiveIntegerField(default=0, verbose_name='قیمت قبل')
@@ -51,7 +52,7 @@ class Product(models.Model):
     score = models.FloatField(default=0.0, verbose_name='امتیاز')
 
     
-    # image = models.ImageField(upload_to='images/product',verbose_name='تصویر محصول')
+    # image = models.ImageField(upload_to='images/product',default='',null=True,blank=True,verbose_name='تصویر محصول')
     is_active = models.BooleanField(default=False,verbose_name='وضعیت')
     register_date = models.DateField(auto_now_add=True,verbose_name="تاریخ ثبت")
     publication_date =models.DateField(default=timezone.now,verbose_name="تاریخ انتشار")
@@ -62,15 +63,30 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name}'
     
+    def save(self,*args, **kwargs):
+        if not self.slug :
+            self.slug = slugify(self.name,allow_unicode=True)
+        return super().save(*args, **kwargs)
+    
     class Meta :
         verbose_name = 'محصول'
         verbose_name_plural = 'محصولات'
 # ------------------------------------------------------------------------------------------------------
+class FeatureValue(models.Model):
+    value_title = models.CharField(max_length=100,verbose_name='عنوان مقدار')
+    feature = models.ForeignKey(Feature,on_delete=models.CASCADE,null=True,blank=True,related_name='feature_value',verbose_name='ویژگی')
+
+    def __str__(self):
+        return f'{self.id}\t{self.value_title}'
+    class Meta :
+        verbose_name = 'مقدار ویژگی'
+        verbose_name_plural = 'مقدار ویژگی ها'
+# ------------------------------------------------------------------------------------------------------
 class ProductFeature(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name='محصول')
+    product = models.ForeignKey(Product,related_name='productfeatures',on_delete=models.CASCADE,verbose_name='محصول')
     feature = models.ForeignKey(Feature,on_delete=models.CASCADE,verbose_name='ویژگی')
     value = models.CharField(max_length=100,verbose_name='مقدار')
-
+    filter_value = models.ForeignKey(FeatureValue,on_delete=models.CASCADE,null=True,blank=True,verbose_name='مقدار فیلتر ویژگی')
     def __str__(self):
         return f'{self.product}\t{self.feature}\t{self.value}'
     

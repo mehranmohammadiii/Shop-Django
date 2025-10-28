@@ -851,7 +851,7 @@
 			</div>
 			<!-- .block-products / end -->
 			<!-- .block-categories -->
-			<div class="block block--highlighted block-categories block-categories--layout--compact">
+			 {% comment %} <div class="block block--highlighted block-categories block-categories--layout--compact">
 				<div class="container">
 					<div class="block-header">
 						<h3 class="block-header__title">دسته های محبوب</h3>
@@ -944,7 +944,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>  {% endcomment %}
+			kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+			{% render_partial 'products:popular_categories'%}
+
 			<!-- .block-categories / end -->
 			<!-- .block-products-carousel -->
 			{% comment %} <div class="block block-products-carousel" data-layout="grid-5">
