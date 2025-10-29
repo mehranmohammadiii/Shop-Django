@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'apps.products.apps.ProductsConfig',
     'django_render_partial',
     'django.contrib.humanize',
+    'django_filters',
+    'django_admin_listfilter_dropdown',
+    # 'ckeditor',
+    # 'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +140,20 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_REDIRECT_URL = 'main:index'
 LOGOUT_REDIRECT_URL = 'main:index'
 LOGIN_URL = 'accounts:login'
+
+
+
+# CKEditor Settings
+# CKEDITOR_UPLOAD_PATH = 'images/ckeditor/'
+# CKEDITOR_IMAGE_BACKEND = "pillow"
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Custom',
+#         'toolbar_Custom': [
+#             ['Bold', 'Italic', 'Underline'],
+#             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+#             ['Link', 'Unlink'],
+#             ['RemoveFormat', 'Source']
+#         ]
+#     }
+# }

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+# from ckeditor_uploader.fields import RichTextUploadingField
 # ------------------------------------------------------------------------------------------------------
 class Brand(models.Model):
     name = models.CharField(max_length=50,verbose_name='نام برند')
@@ -43,6 +44,7 @@ class Feature(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=300,verbose_name='نام محصول')
     short_text = models.TextField(max_length=500,null=True,blank=True,verbose_name='متن خلاصه')
+    # short_text = RichTextUploadingField(blank=True,verbose_name='متن خلاصه')
     text = models.TextField(null=True,blank=True,verbose_name='متن و توضیخات')
     slug = models.SlugField(max_length=250,null=True,blank=True,unique=True,allow_unicode=True)
 

@@ -888,3 +888,23 @@
 	
 
 })(jQuery);
+// ---------------------------------------------------------------------------------------------------------------
+ function sort_products() {
+        // ۱. المنت select را پیدا می‌کنیم
+        const selectSort = document.getElementById('select_sort');
+        
+        // ۲. مقداری که کاربر انتخاب کرده را می‌خوانیم (مثلاً: '0', '1', '2')
+        const selectedValue = selectSort.value;
+        
+        // ۳. آبجکت URLSearchParams را برای مدیریت آسان پارامترهای URL می‌سازیم
+        // window.location.search پارامترهای فعلی را برمی‌گرداند (مثلاً: '?brand=12&feature=4')
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // ۴. پارامتر 'sort_type' را با مقدار جدید تنظیم می‌کنیم
+        // اگر این پارامتر از قبل وجود داشته باشد، آپدیت می‌شود. اگر نه، اضافه می‌شود.
+        urlParams.set('sort_type', selectedValue);
+        
+        // ۵. صفحه را با آدرس جدید (که شامل پارامتر مرتب‌سازی است) رفرش می‌کنیم
+        // urlParams.toString() پارامترها را به رشته تبدیل می‌کند (مثلاً: 'brand=12&feature=4&sort_type=1')
+        window.location.href = window.location.pathname + '?' + urlParams.toString();
+    }
