@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     # 'ckeditor',
     # 'ckeditor_uploader'
+    'apps.orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [

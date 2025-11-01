@@ -1,0 +1,16 @@
+{% extends "maintemplate.html" %}
+{% load render_partial %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    فروشگاه
+{% endblock title %}
+
+{% block content %}
+
+    <div id='shop_cart_list'>
+    	{% render_partial 'orders:show_shop_cart'%}
+    </div>
+
+{% endblock content %}
+
