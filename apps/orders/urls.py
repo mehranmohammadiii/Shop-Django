@@ -9,4 +9,6 @@ urlpatterns = [
     path("show_shop_cart/",views.show_shop_cart,name='show_shop_cart'),
     path("delete_from_shop_cart/",views.delete_from_shop_cart,name='delete_ from_shop_cart'),
     path('update_shop_cart/', views.update_shop_cart, name='update_shop_cart'),
+    path("status_of_shop_cart/",views.status_of_shop_cart,name='status_of_shop_cart'),
+
 ]

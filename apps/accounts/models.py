@@ -53,4 +53,5 @@ class CustomUser(AbstractBaseUser,PermissionsMixin) :
         verbose_name_plural = 'کاربران'
 
 # ----------------------------------------------------------------------------------------------------
-
+# class Customer(models.Model):
+#     user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,primary_key=True)

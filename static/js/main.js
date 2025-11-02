@@ -909,28 +909,46 @@
         window.location.href = window.location.pathname + '?' + urlParams.toString();
     }
 // ---------------------------------------------------------------------------------------------------------------------------------------------
-// function add_to_shop_cart(product_id,count){
-//     alert(product_id+' '+count); 
-//     $.ajax({
-//         type : 'GET',
-//         url : '/orders/add_to_shop_cart/',
-//         data : {
-//             product_id:product_id,
-//             count:count
-//         },
-//         success:function(res){
-//             alert(res);
-//         }
-//     });
-// }
+function status_of_shop_cart() {
+    const url = '/orders/status_of_shop_cart/';
+    const numberItemsElement = document.getElementById('indicator__value');
+
+    fetch(url) 
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }) 
+    .then(data => {
+        numberItemsElement.textContent = data.count;
+    })
+    .catch(error => {
+        console.error('Error fetching cart status:', error);
+    });
+}
 // -------------------------------------------------------------------------------------------------------------------------------------------------
+// function getCookie(name) {
+//     let cookieValue = null;
+//     if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             // Does this cookie string begin with the name we want?
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -939,23 +957,32 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-// ------------------------------------------------------------------------------------------------------
 
 
+// تابع getCookie را می‌توانید حذف کنید یا نگه دارید، اما دیگر از آن استفاده نمی‌کنیم
 
 function add_to_shop_cart(product_id, count) {
-    if (count==0) {
-        count=document.getElementById('product-quantity').value;
-        alert(count)
+    if (count == 0) {
+        const quantityInput = document.getElementById('product-quantity');
+        if (quantityInput) {
+            count = quantityInput.value;
+        }
     }
-    // alert(product_id+' '+count)
-    const csrftoken = getCookie('csrftoken'); 
-    const url = '/orders/add_to_shop_cart/';
+    
+    // --- اصلاح اصلی اینجاست: خواندن توکن مستقیم از تگ input ---
+    const csrftokenInput = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (!csrftokenInput) {
+        alert('خطای امنیتی: توکن CSRF یافت نشد.');
+        return; // اجرای تابع را متوقف کن
+    }
+    const csrftoken = csrftokenInput.value;
+    // --------------------------------------------------------
+    
+    const url = '{% url "orders:add_to_shop_cart" %}';
 
     const formData = new FormData();
     formData.append('product_id', product_id);
     formData.append('count', count);
-    const Number_items_shopping = document.getElementById('xy');
 
     fetch(url, {
         method: 'POST',
@@ -964,16 +991,104 @@ function add_to_shop_cart(product_id, count) {
         },
         body: formData,
     })
-    .then(response => response.text()) 
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            // برای دیباگ کردن، متن خطا را از سرور بگیریم
+            return response.text().then(text => { throw new Error('خطای سرور: ' + text) });
+        }
+    }) 
     .then(data => {
-        alert('کالای موردنظر درج شد');
-        // Number_items_shopping.textContent = data;  
-
-
+        if (data.status === 'success') {
+            alert(data.message);
+            status_of_shop_cart();
+        } else {
+            alert('خطا: ' + data.message);
+        }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('خطایی در افزودن به سبد خرید رخ داد.');
+        alert(error.message); // نمایش پیام خطای دقیق‌تر
+    });
+}
+// ------------------------------------------------------------------------------------------------------
+// function add_to_shop_cart(product_id, count) {
+//     if (count==0) {
+//         count=document.getElementById('product-quantity').value;
+//         alert(count)
+//     }
+//     // alert(product_id+' '+count)
+//     const csrftoken = getCookie('csrftoken'); 
+//     const url = '/orders/add_to_shop_cart/';
+
+//     const formData = new FormData();
+//     formData.append('product_id', product_id);
+//     formData.append('count', count);
+//     const Number_items_shopping = document.getElementById('xy');
+
+//     fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'X-CSRFToken': csrftoken,
+//         },
+//         body: formData,
+//     })
+//     .then(response => response.text()) 
+//     .then(data => {
+//         alert('کالای موردنظر درج شد');
+//         status_of_shop_cart();
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         alert('خطایی در افزودن به سبد خرید رخ داد.');
+//     });
+// }
+function add_to_shop_cart(product_id, count) {
+    if (count == 0) {
+        const quantityInput = document.getElementById('product-quantity');
+        if (quantityInput) {
+            count = quantityInput.value;
+        }
+    }
+    
+    // ۱. حالا این خط به درستی کار خواهد کرد
+    const csrftoken = getCookie('csrftoken'); 
+    
+    const url = '/orders/add_to_shop_cart/'; // یا بهتر: {% url 'orders:add_to_shop_cart' %}
+
+    const formData = new FormData();
+    formData.append('product_id', product_id);
+    formData.append('count', count);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+        },
+        body: formData,
+    })
+    .then(response => {
+        // ۲. پاسخ را به صورت JSON می‌خوانیم
+        if (response.ok) {
+            return response.json(); 
+        } else {
+            // اگر خطای 403 یا 500 داشتیم، اینجا مدیریت می‌شود
+            throw new Error('خطایی در سمت سرور رخ داد.');
+        }
+    }) 
+    .then(data => {
+        // ۳. حالا data یک آبجکت است: { status: 'success', message: '...' }
+        if (data.status === 'success') {
+            alert(data.message); // نمایش پیام موفقیت از سرور
+            status_of_shop_cart(); // آپدیت کردن عدد روی آیکون سبد خرید
+        } else {
+            alert('خطا: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('خطایی در ارتباط با سرور رخ داد.');
     });
 }
 // -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -996,16 +1111,60 @@ function delete_from_shop_cart(product_id) {
     .then(html => {
         alert('کالای موردنظرحذف شد');
         shop_cart_list.innerHTML = html;
-
-
+        status_of_shop_cart();
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('خطایی در افزودن به سبد خرید رخ داد.');
+        alert('خطایی در حذف به سبد خرید رخ داد.');
     });
 }
 // -------------------------------------------------------------------------------------------------------------------------------------------------
+// function update_shop_cart() {
+//     const allItemInputs = document.querySelectorAll("input[id^='item_']");
+
+//     let updatedItems = [];
+
+//     allItemInputs.forEach(input => {
+//         const productId = input.id.split('_')[1];
+        
+//         const newCount = input.value;
+        
+//         updatedItems.push({
+//             'product_id': productId,
+//             'count': newCount
+//         });
+//     });
+
+//     console.log(updatedItems); 
+
+//     const csrftoken = getCookie('csrftoken'); 
+
+//     const url = '/orders/update_shop_cart/';
+
+//     fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'X-CSRFToken': csrftoken,
+//             'Content-Type': 'application/json' 
+//         }, 
+//         body: JSON.stringify({ 'items': updatedItems }) 
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//            window.location.reload(); 
+//            status_of_shop_cart();
+//         } else {
+//             alert('خطایی در به‌روزرسانی سبد خرید رخ داد.');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         alert('یک خطای پیش‌بینی نشده رخ داد.');
+//     });
+// }
+// -------------------------------------------------------------------------------------------------------------------------------------------------
 function update_shop_cart() {
+
     const allItemInputs = document.querySelectorAll("input[id^='item_']");
 
     let updatedItems = [];
@@ -1023,32 +1182,41 @@ function update_shop_cart() {
 
     console.log(updatedItems); 
 
-    const csrftoken = getCookie('csrftoken'); 
 
+    const csrftoken = getCookie('csrftoken');
     const url = '/orders/update_shop_cart/';
+    
+    const shop_cart_container = document.getElementById('shop_cart_list');
 
     fetch(url, {
         method: 'POST',
         headers: {
             'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json' 
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 'items': updatedItems }) 
     })
     .then(response => {
         if (response.ok) {
-           window.location.reload(); 
-        } else {
-            alert('خطایی در به‌روزرسانی سبد خرید رخ داد.');
+            return response.text(); 
         }
+        throw new Error('خطایی در به‌روزرسانی سبد خرید رخ داد.');
+    })
+    .then(html => {
+        shop_cart_container.innerHTML = html;
+
+        status_of_shop_cart();
+        
+        alert('سبد خرید با موفقیت به‌روزرسانی شد.'); 
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('یک خطای پیش‌بینی نشده رخ داد.');
+        alert(error.message);
     });
 }
 // -------------------------------------------------------------------------------------------------------------------------------------------------
 
+document.addEventListener('DOMContentLoaded', status_of_shop_cart);
 
 
 
